@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <form action='/lesson' method='get'>
+        <div class='container'>
+            <div class='row d-flex justify-content-center'>
+                <h1 class='display-3 regal'>
+                    Lesson 1
+                </h1>
+            </div>
+            <div class='container d-flex justify-content-center p-3'>
+                <a href="{{ url_for('learn')}}" class='btn btn-danger'>Return to Lesson List</a>
+            </div>
+            <div class='container'>
+                <div class='row d-flex justify-content-center p-3'>
+                    <a href="{{ url_for('quiz')}}" class='btn btn-danger'>Quiz 1</a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

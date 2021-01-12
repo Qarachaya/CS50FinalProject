@@ -1,0 +1,193 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <form action='/quiz' method='get'>
+        <!-- Quiz title -->
+        <div id='header'>
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center'>
+                <h1 class='display-3 regal'>
+                    <span class='px-4'>Quiz</span><span id='qnumber'></span>
+                </h1>
+            </div>
+        </div>
+        <div id='footer'>
+
+            <!-- Exit button, question number, and points counter -->
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-4'>
+                <div class='col d-flex justify-content-center'>
+                    <a id='exit' href="{{ url_for('lesson')}}" class='btn btn-danger'>
+                        Exit Quiz
+                    </a>
+                </div>
+                <div class='col d-flex justify-content-center'>
+                    <span class='px-1'>Question</span><span id='number'></span>
+                </div>
+                <div class='col d-flex justify-content-center'>
+                    <span class='px-1'>Points:</span><span id='points'></span>
+                </div>
+            </div>
+
+            <!-- Question prompt -->
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-5'>
+                <span class='px-1'>Translate:</span>
+                <span id='prompt'></span>
+            </div>
+
+            <!-- Where user answers question, switches to next question, and finishes quiz -->
+            <div id='askQuestion' class='container-{breakpoint}-fluid d-flex justify-content-center pt-4'>
+                <span id='text' class='px-2'>Your Answer:</span>
+                <input type='text' id='response' autocomplete='off'>
+                <input type='button' id='submission' class='btn btn-danger' value='Check Answer' onclick='check();'>
+            </div>
+            <div id='switchQuestion' class='container-{breakpoint}-fluid d-flex justify-content-center pt-4' style='display:none;'>
+                <span id='iscorrect' class='regal px-3'></span>
+                <input type='button' id='next' class='btn btn-danger' value='Next Question' onclick='nextQuestion();' style='display:none;'>
+            </div>
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-2'>
+                <input type='button' id='finish' style='display:none;' class='btn btn-danger' value='Finish Quiz' onclick='finishQuiz();'>
+            </div>
+
+            <!-- Assyrian keyboard -->
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-3'>
+                <button id='keyboardToggle' class='btn btn-danger' onclick='toggler();'>
+                    Toggle Assyrian Keyboard
+                </button>
+            </div>
+            <!-- Keyboard and press/insert letter functions modeled on assyrianlanguages.org/sureth keyboard HTML/JavaScript -->
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center p-2'>
+                <table id='keyboard' class='table table-borderless justify-content-center' style='display:none;'>
+                    <tr>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܟ' onclick="press('ܟ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܝ' onclick="press('ܝ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܛ' onclick="press('ܛ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܚ' onclick="press('ܚ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܙ' onclick="press('ܙ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܘ' onclick="press('ܘ';)">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܗ' onclick="press('ܗ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܕ' onclick="press('ܕ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܓ' onclick="press('ܓ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒ' onclick="press('ܒ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܐ' onclick="press('ܐ');">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܬ' onclick="press('ܬ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܫ' onclick="press('ܫ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܪ' onclick="press('ܪ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܩ' onclick="press('ܩ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܨ' onclick="press('ܨ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܦ' onclick="press('ܦ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܥ' onclick="press('ܥ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܣ' onclick="press('ܣ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܢ' onclick="press('ܢ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܡ' onclick="press('ܡ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܠ' onclick="press('ܠ');">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒ݉' onclick="press('݉');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒ̈' onclick="press('̈');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒ̤' onclick="press('̤');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒ̃' onclick="press('̰');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒ̰' onclick="press('̃');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒܿ' onclick="press('ܼ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒܼ' onclick="press('ܿ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒܸ' onclick="press('ܸ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒܹ' onclick="press('ܹ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒܲ' onclick="press('ܲ');">
+                        </td>
+                        <td>
+                            <input type='button' class='btn btn-danger' value='ܒܵ' onclick="press('ܵ');">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Results display: currently hidden -->
+        <div id='results' style='display:none;'>
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-3'>
+                    You did it!
+            </div>
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-3'>
+                <span class='px-1'>Percent Score:</span>
+                <span id='percent'></span>
+            </div>
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-3'>
+                <input type='button' class='btn btn-danger' id='restart' value='Take Quiz Again' onclick='restartQuiz();'>
+            </div>
+            <div class='container-{breakpoint}-fluid d-flex justify-content-center pt-3'>
+                <input type='button' id='back' onclick="window.location='{{ url_for('lesson')}}'" class='btn btn-danger' value='Return to Lesson'>
+            </div>
+        </div>
+
+        <!-- JavaScript: list of questions from Python and the external script -->
+        <div id='scripts' style='display:none;'>
+            <script>
+                var information = JSON.parse('{{ information | tojson | safe }}');
+            </script>
+            <script src='/static/quizzes.js'></script>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,8 @@
+cs50
+Flask
+JSON
+random
+
+To create dictionary table in academy.db, I ran the following sqlite3 query:
+.separator ,
+.import data/dictionary.csv dictionary
